@@ -11,6 +11,7 @@ public abstract class item
 	private boolean onHold;
 	private int numItems;
 	private double price;
+	public static final int MAX_NUM_ITEMS = 50;
 	
 	public abstract calculateTotal()
 	{
