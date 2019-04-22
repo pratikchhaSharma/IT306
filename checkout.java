@@ -151,6 +151,18 @@ public static void search(item<?> Items, String path){
 	}
 	else {
 		//fill, allow user to search by name, or just give a list of entire database like in the addToCart func.
+		String itemString = "";
+		///need to reproduce cart instead
+		for (int i = 0; i < items.size(); i++){
+			cartString += i+1 + ". " cart.get(i).getName() + " by " + cart.get(i).getAuthor();   	
+		}
+		JTextArea textArea = new JTextArea("Insert your Text here");
+		JScrollPane scroll = new JScrollPane(textArea);  
+		textArea.setLineWrap(true);  
+		textArea.setWrapStyleWord(true); 
+		scrollPane.setPreferredSize( new Dimension( 250, 400 ) );
+					
+		JOptionPane.showMessageDialog(null, scroll, cartString));
 	}
 	
 }
