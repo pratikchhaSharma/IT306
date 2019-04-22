@@ -67,7 +67,7 @@ public static item[] readFromFile(String path, item[] items)
    then it will add to the cart.
 */
 public static void addToCart(Object Item, Cart Cart){
-	
+	//if cart is full throw an error
 }
 
 /* The remove from cart method will allow the user to input the name of an item they would like to be removed from their cart. The 
@@ -75,14 +75,15 @@ public static void addToCart(Object Item, Cart Cart){
     If the number exists the cart will remove the item and renumber the cart.
 */
 public static void removeFromCart(Object Item, Cart Cart){
-	
+	//if cart is empty throw an error
 }
 
 /* This function will allow the user to enter the name of an item they would like to find and the function will search the database
     for the item and return whether or not it is available for purchase or not. 
 */
-public static void search(){
-
+public static void search(item[] Items){
+	//if text file is void throw an error?
+	
 }
 
 //Checking out adjusts the database.
@@ -90,5 +91,7 @@ public static void search(){
    it will adjust the database accordingly.
 */
 public string checkout(Cart Cart, String path){
+//Loop through cart and toString everything, calculate subtotal, tax, and final total
+//If everything works, rewrite the database (LOGIC: REMOVE CART ITEMS FROM ITEMS ARRAY AND WRITE IT OVER THE OLDER TEXT FILE.)
 	return "Fill";
 }
