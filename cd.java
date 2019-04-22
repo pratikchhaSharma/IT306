@@ -12,5 +12,10 @@ public class cd extends item
 	{
 		return this.recordLable;
 	}
+	public double calculateTotal()
+	{
+		return this.price * checkout.TAX; 
+	}
+	
 
 }
