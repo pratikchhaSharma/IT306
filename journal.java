@@ -14,4 +14,9 @@ public class journal extends item
 		return this.volume;
 	}
 	
+	public double calculateTotal()
+	{
+		return this.price * checkout.TAX; 
+	}
+	
 }
