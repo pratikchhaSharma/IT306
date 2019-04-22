@@ -12,9 +12,10 @@ public abstract class item
 	private int numItems;
 	private double price;
 	
-	public double calculateTotal()
+	public abstract calculateTotal()
 	{
-		return this.numItems * this.price;
+		//return this.numItems * this.price;
+		//specified as an abstract method in requirements
 	}
 	public String getName()
 	{
