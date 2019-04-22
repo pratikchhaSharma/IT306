@@ -3,6 +3,7 @@ package IT306Project;
 public class checkout 
 {
 	item[] cart = new item[item.MAX_NUM_ITEMS];
+	String path = "./src/IT306Project/inventory.txt";
 	String menu ="1- Add to cart\n2-Remove from cart\n3-Search\n4-Check holds\n5-Checkout.";
 	int option = 0;
 	do{
@@ -22,7 +23,7 @@ public class checkout
 			checkHold(item)
 		case 5:
 			//Checkout
-			checkout(cart)
+			checkout(cart, path)
 		}
 	}while(true);
 }
@@ -54,6 +55,6 @@ public static void search(){
 /*This function will return a formatted string receipt of items purchased in a list sorted by names in ascending order. If successful
    it will adjust the database accordingly.
 */
-public string checkout(Cart Cart){
+public string checkout(Cart Cart, String path){
 	return "Fill";
 }
