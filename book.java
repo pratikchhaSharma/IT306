@@ -12,5 +12,11 @@ public class book extends item
 	{
 		return this.isbn;
 	}
+
+	public double calculateTotal()
+	{
+		return this.price * checkout.TAX; 
+	}
+	
 	
 }
