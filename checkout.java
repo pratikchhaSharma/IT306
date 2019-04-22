@@ -2,6 +2,7 @@ package IT306Project;
 
 public class checkout 
 {
+	int empty = 0;
 	item[] cart = new item[item.MAX_NUM_ITEMS];
 	item[] items = new item[item.MAX_NUM_ITEMS];
 	String path = "./src/IT306Project/inventory.txt";
@@ -22,7 +23,7 @@ public class checkout
 			search(name)
 		case 4:
 			//Check item for holds
-			checkHold(item)
+			checkHold(item, path)
 		case 5:
 			//Checkout
 			checkout(cart, path)
@@ -67,7 +68,13 @@ public static item[] readFromFile(String path, item[] items)
    then it will add to the cart.
 */
 public static void addToCart(Object Item, Cart Cart){
-	//if cart is full throw an error
+	if (cart.length > item.MAX_NUM_ITEMS){
+		throw new ArrayIndexOutOfBoundsException("Cart is full");	
+	}
+	else{
+		//create a dialog box with a scroll allowing for user to select what item they wish to add to cart
+		//items are numbered and number corresponds to item
+	}
 }
 
 /* The remove from cart method will allow the user to input the name of an item they would like to be removed from their cart. The 
@@ -75,14 +82,27 @@ public static void addToCart(Object Item, Cart Cart){
     If the number exists the cart will remove the item and renumber the cart.
 */
 public static void removeFromCart(Object Item, Cart Cart){
-	//if cart is empty throw an error
+	if (cart.length = empty){
+		throw new ArrayIndexOufOfBoundsException("Cart is empty");	
+	}
+	else {
+		/*Create a dialog box that shows users cart that is numbered, user inputs number they want removed.
+		*/
+	}
 }
 
 /* This function will allow the user to enter the name of an item they would like to find and the function will search the database
     for the item and return whether or not it is available for purchase or not. 
 */
-public static void search(item[] Items){
+public static void search(item[] Items, String path){
 	//if text file is void throw an error?
+	File file = new File(path);
+	if (file.length() == 0){
+		throw new IllegalArgumentException("File is empty or does not exist");	
+	}
+	else {
+		//fill, allow user to search by name, or just give a list of entire database like in the addToCart func.
+	}
 	
 }
 
