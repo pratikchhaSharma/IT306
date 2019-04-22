@@ -6,6 +6,6 @@ the use of new lines and having the data for only one item on each line.
 //format
 //name, author, genre, publisher, publication date, (volume / ISBN / Record label)
 
-IT 306 Test, Guilcon, Horror, Quang Quach, 1/1/19, 1
-Best Professor Ever: Setareh Rafatirad, Barack Obama, Non-Fiction, Tree-House, 5/31/2019, 23098475
-It 306 Mixtape, G-Money and Lil Q, Rap/Hip-Hop, BMI, 2/14/19, Sony Entertainment
+IT 306 Test, Guilcon, Horror, Quang Quach, 1/1/19, 10, 1
+Best Professor Ever: Setareh Rafatirad, Barack Obama, Non-Fiction, Tree-House, 5/31/2019, 1000, 23098475
+It 306 Mixtape, G-Money and Lil Q, Rap/Hip-Hop, BMI, 2/14/19, 4.77, Sony Entertainment
