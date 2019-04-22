@@ -50,6 +50,7 @@ public static item[] readFromFile(String path, item[] items)
 			String publicationDate = scan2.next();
 			double price = Double.parseDouble(scan2.next().trim());			
 			Item s = new Item(name, genre, publisher, publicationDate, price);
+			//have not fully created items
 			items[counter++]=s;
 			System.out.println(line);
 		}
@@ -82,7 +83,7 @@ public static void addToCart(Object Item, Cart Cart){
     If the number exists the cart will remove the item and renumber the cart.
 */
 public static void removeFromCart(Object Item, Cart Cart){
-	if (cart.length = empty){
+	if (cart.length == empty){
 		throw new ArrayIndexOufOfBoundsException("Cart is empty");	
 	}
 	else {
@@ -113,5 +114,11 @@ public static void search(item[] Items, String path){
 public string checkout(Cart Cart, String path){
 //Loop through cart and toString everything, calculate subtotal, tax, and final total
 //If everything works, rewrite the database (LOGIC: REMOVE CART ITEMS FROM ITEMS ARRAY AND WRITE IT OVER THE OLDER TEXT FILE.)
+	if (cart.length == empty){
+		throw new IllegalArgumentException("Cart is empty.");
+	}
+	else{
+		//fill with logic to append cart to string,  do math for totals, display the string, and rewrite database
+	}
 	return "Fill";
 }
