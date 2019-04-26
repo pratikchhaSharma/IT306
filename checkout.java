@@ -1,3 +1,4 @@
+
 package IT306Project;
 import java.awt.Dimension;
 import java.io.File;
@@ -11,6 +12,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 public class checkout 
 {
+public static final double tax = 0.1;
+
+
+
 public static void main(String[] args){
 	int empty = 0;
 	//item[] cart = new item[item.MAX_NUM_ITEMS];
@@ -21,7 +26,9 @@ public static void main(String[] args){
 	String path = "./src/IT306Project/inventory.txt";
 	
 	items = readFromFile(path, items);
-	String menu ="1- Add to cart\n2-Remove from cart\n3-Search\n4-Check holds\n5-Checkout.";
+	System.out.print(items.size());
+	System.out.print(items.get(1).getName());
+	String menu ="1- Add to cart\n2-Remove from cart\n3-Search\n4-Checkout.";
 	int option = 0;
 	do{
 		option = Integer.parseInt(JOptionPane.showInputDialog(menu));
@@ -29,15 +36,19 @@ public static void main(String[] args){
 		case 1:
 			//Add item to cart
 			addToCart(items, cart, items);
+			break;
 		case 2:
 			//Remove item from cart
 			removeFromCart(items, cart);
+			break;
 		case 3:
 			//Search for an item
 			search(items);
+			break;
 		case 4:
 			//Checkout
 			checkout(cart, path);
+			break;
 		
 		}
 	}while(true);
@@ -48,13 +59,14 @@ public static void main(String[] args){
    public static LinkedList<item> readFromFile(String path, LinkedList<item> items){
 	try{
 		
-		item s;
+		
 		
 		String line =null; 
 		Scanner scan =new Scanner(new FileInputStream(new File(path)));  
 		Scanner scan2 =null; 
 		int counter=0; 
 		while(scan.hasNextLine()){
+			item s;
 			line = scan.nextLine();
 			scan2 = new Scanner(line);
 			scan2.useDelimiter(","); 
@@ -65,17 +77,21 @@ public static void main(String[] args){
 			String genre = scan2.next();
 			String publisher = scan2.next();
 			String publicationDate = scan2.next();
-			double price = Double.parseDouble(scan2.next().trim());			
+			double price = Double.parseDouble(scan2.next().trim());	
+			String type = scan2.next();
 			 //s= new item(name, author,genre, publisher, publicationDate, price);
 			//have not fully created items
-			if (scan.next().equals("Journal")){
+			if (type.equals("Journal")){
 				s = new journal(name, author, genre, publisher, publicationDate, price);
+				items.add(s);
 			}
-			if (scan.next().equals("Book")) {
+			if (type.equals("Book")) {
 				s = new book(name, author, genre, publisher, publicationDate, price);
+				items.add(s);
 			}
-			if (scan.next().equals("CD")) {
+			if (type.equals("CD")) {
 				s = new cd(name, author, genre, publisher, publicationDate, price);
+				items.add(s);
 			}
 		
 			//System.out.println(line);
@@ -94,7 +110,7 @@ public static void main(String[] args){
    with each item added. It will first ask the user what the name of the item they would like added, if the item exists in the database
    then it will add to the cart.
 */
-public static LinkedList<item> addToCart(Object Item, LinkedList<item> Cart, LinkedList<item> items){
+public static void addToCart(Object Item, LinkedList<item> Cart, LinkedList<item> items){
 	if (Cart.size() > item.MAX_NUM_ITEMS){
 		throw new ArrayIndexOutOfBoundsException("Cart is full");	
 	}
@@ -103,19 +119,19 @@ public static LinkedList<item> addToCart(Object Item, LinkedList<item> Cart, Lin
 		//items are numbered and number corresponds to item
 		String itemString = "";
 		for (int i = 0; i < items.size(); i++){
-			itemString += i+1 + ". " + items.get(i).getName() + " by " + items.get(i).getAuthor();   	
+			itemString += i+1 + ". " + items.get(i).getName() + " by " + items.get(i).getAuthor() + "\n";   	
 		}
-		JTextArea textArea = new JTextArea("Insert your Text here");
+		/*JTextArea textArea = new JTextArea(itemString);
 		JScrollPane scroll = new JScrollPane(textArea);  
 		textArea.setLineWrap(true);  
 		textArea.setWrapStyleWord(true); 
-		scrollPane.setPreferredSize( new Dimension( 250, 400 ) );
+		scroll.setPreferredSize( new Dimension( 250, 400 ) );*/
 		
 		try {
 			
-		int selection = Integer.parseInt(JOptionPane.showInputDialog(null, scroll, itemString));
+		int selection = Integer.parseInt(JOptionPane.showInputDialog("Pick an item" + itemString));
 		if (selection-1 <= items.size() && selection-1 >= 0){
-			item x = list.remove(i);
+			item x = items.get(selection-1);
 			Cart.add(x); //left off here
 		}
 		
@@ -130,30 +146,29 @@ public static LinkedList<item> addToCart(Object Item, LinkedList<item> Cart, Lin
     function will first display their current cart and a number for each item. The user will input the number they want removed.
     If the number exists the cart will remove the item and renumber the cart.
 */
-public static void removeFromCart(Object Item, LinkedList <?> Cart){
+public static void removeFromCart(Object Item, LinkedList <item> Cart){
 	if (Cart.size() == 0){
 		throw new ArrayIndexOutOfBoundsException("Cart is empty");	
 	}
 	else {
 		/*Create a dialog box that shows users cart that is numbered, user inputs number they want removed.
 		*/
-		String itemString = "";
+		String cartString = "";
 		///need to reproduce cart instead
-		for (int i = 0; i < Items.size(); i++){
-			cartString += i+1 + ". " + Cart.get(i).getName() + " by " + Cart.get(i).getAuthor();   	
+		for (int i = 0; i < Cart.size(); i++){
+			cartString += i+1 + ". " + Cart.get(i).getName() + " by " + Cart.get(i).getAuthor() + "\n";   	
 		}
-		JTextArea textArea = new JTextArea("Insert your Text here");
+		/*JTextArea textArea = new JTextArea("Insert your Text here");
 		JScrollPane scroll = new JScrollPane(textArea);  
 		textArea.setLineWrap(true);  
 		textArea.setWrapStyleWord(true); 
-		scrollPane.setPreferredSize( new Dimension( 250, 400 ) );
+		scroll.setPreferredSize( new Dimension( 250, 400 ) );*/
 		
 		try {
 			
-		int selection = Integer.parseInt(JOptionPane.showInputDialog(null, scroll, cartString));
+		int selection = Integer.parseInt(JOptionPane.showInputDialog(null, cartString));
 		if (selection-1 <= Cart.size() && selection-1 >= 0){
-			item x = Cart.remove(i);
-			Cart.remove(x); //left off here
+			Cart.remove(selection-1);
 		}
 		
 		}
@@ -166,28 +181,21 @@ public static void removeFromCart(Object Item, LinkedList <?> Cart){
 /* This function will allow the user to enter the name of an item they would like to find and the function will search the database
     for the item and return whether or not it is available for purchase or not. 
 */
-public static void search(LinkedList <?> Items){
+public static void search(LinkedList <item> Items){
 	//if text file is void throw an error?
-	String path;
-	File file = new File(path);
-	if (file.length() == 0){
-		throw new IllegalArgumentException("File is empty or does not exist");	
-	}
-	else {
-		//fill, allow user to search by name, or just give a list of entire database like in the addToCart func.
-		String itemString = "";
-		///need to reproduce cart instead
-		for (int i = 0; i < Items.size(); i++){
-			cartString += i+1 + ". " + cart.get(i).getName() + " by " + cart.get(i).getAuthor();   	
+	String input = JOptionPane.showInputDialog("what item or author are you loooking for?");
+	
+	for(int i=0; i<Items.size(); i++)
+	{
+		if(Items.get(i).getName().trim().equalsIgnoreCase(input.trim()) || Items.get(i).getAuthor().equalsIgnoreCase(input) ){
+			JOptionPane.showMessageDialog(null, "Item exists");
+			return;
 		}
-		JTextArea textArea = new JTextArea("Insert your Text here");
-		JScrollPane scroll = new JScrollPane(textArea);  
-		textArea.setLineWrap(true);  
-		textArea.setWrapStyleWord(true); 
-		scrollPane.setPreferredSize( new Dimension( 250, 400 ) );
-					
-		JOptionPane.showMessageDialog(null, scroll, cartString);
-	   }
+		
+
+	}
+	
+	JOptionPane.showMessageDialog(null, "Item does not exist");
    }
 
 
@@ -196,16 +204,30 @@ public static void search(LinkedList <?> Items){
 /*This function will return a formatted string receipt of items purchased in a list sorted by names in ascending order. If successful
    it will adjust the database accordingly.
 */
-public static String checkout(LinkedList <?> Cart, String path){
+public static void checkout(LinkedList <item> Cart, String path){
 //Loop through cart and toString everything, calculate subtotal, tax, and final total
 //If everything works, rewrite the database (LOGIC: REMOVE CART ITEMS FROM ITEMS ARRAY AND WRITE IT OVER THE OLDER TEXT FILE.)
+	String cartString = "";
+	Double subTotal=0.0;
+	Double total=0.0;
+	String totals = "";
+	//fill with logic to append cart to string,  do math for totals, display the string, and rewrite database
+			///need to reproduce cart instead
 	if (Cart.size() == 0){
 		throw new IllegalArgumentException("Cart is empty.");
 	}
 	else{
-		//fill with logic to append cart to string,  do math for totals, display the string, and rewrite database
+		
+		
+		for (int i = 0; i < Cart.size(); i++){
+			subTotal+=Cart.get(i).calculateSubTotal();
+			total+=Cart.get(i).calculateTotal();
+			cartString += i+1 + ". " + Cart.get(i).getName() + "        " + Cart.get(i).getPrice() + "\n ";   	
+		}
+		
 	}
-	return "Fill";
+	totals += "\n Subtotal:         " + subTotal + "\nTotal:       " + total;
+	JOptionPane.showMessageDialog(null, cartString + "\n" + totals);
 }
 
 }
