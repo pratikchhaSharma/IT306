@@ -4,6 +4,11 @@ public class cd extends item
 {
 	private String recordLable;
 	
+	public cd(String name, String author, String genre, String publisher, String publicationDate, double price)
+	{
+		super(name, author, genre, publisher, publicationDate, price);
+		this.recordLable=recordLable;
+	}
 	public void setRecordLable(String Lable)
 	{
 		this.recordLable=Lable;
@@ -14,8 +19,11 @@ public class cd extends item
 	}
 	public double calculateTotal()
 	{
-		return this.price * checkout.TAX; 
+		return super.getPrice() + (super.getPrice() * checkout.tax);
 	}
-	
+	public double calculateSubTotal()
+	{
+		return super.getPrice();
+	}
 
 }
