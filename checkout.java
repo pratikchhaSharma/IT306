@@ -15,8 +15,8 @@ public static void main(String[] args){
 	int empty = 0;
 	//item[] cart = new item[item.MAX_NUM_ITEMS];
 	//item[] items = new item[item.MAX_NUM_ITEMS];
-	LinkedList cart = new LinkedList<item>();
-	LinkedList items = new LinkedList<item>();
+	LinkedList<item> cart = new LinkedList<item>();
+	LinkedList<item> items = new LinkedList<item>();
 	
 	String path = "./src/IT306Project/inventory.txt";
 	
@@ -45,7 +45,7 @@ public static void main(String[] args){
 
 
 
-   public static LinkedList readFromFile(String path, LinkedList<item> items){
+   public static LinkedList<item> readFromFile(String path, LinkedList<item> items){
 	try{
 		
 		item s;
@@ -66,9 +66,17 @@ public static void main(String[] args){
 			String publisher = scan2.next();
 			String publicationDate = scan2.next();
 			double price = Double.parseDouble(scan2.next().trim());			
-			 s= new item(name, author,genre, publisher, publicationDate, price);
+			 //s= new item(name, author,genre, publisher, publicationDate, price);
 			//have not fully created items
-			
+			if (scan.next().equals("Journal")){
+				s = new journal(name, author, genre, publisher, publicationDate, price);
+			}
+			if (scan.next().equals("Book")) {
+				s = new book(name, author, genre, publisher, publicationDate, price);
+			}
+			if (scan.next().equals("CD")) {
+				s = new cd(name, author, genre, publisher, publicationDate, price);
+			}
 		
 			//System.out.println(line);
 		}
