@@ -4,6 +4,11 @@ public class book extends item
 {
 	private String isbn;
 	
+	public book(String name, String author, String genre, String publisher, String publicationDate, double price)
+	{
+	super(name, author, genre, publisher, publicationDate, price);
+	this.isbn=isbn;
+	}
 	public void setIsbn (String isbn)
 	{
 		this.isbn=isbn;
@@ -12,11 +17,16 @@ public class book extends item
 	{
 		return this.isbn;
 	}
+	
 
 	public double calculateTotal()
 	{
-		return this.price * checkout.TAX; 
+		return super.getPrice() + (super.getPrice() * checkout.tax);
 	}
 	
+	public double calculateSubTotal()
+	{
+		return super.getPrice();
+	}
 	
 }
