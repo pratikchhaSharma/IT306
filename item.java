@@ -1,9 +1,7 @@
 package IT306Project;
 
-public abstract class item 
+public abstract class item implements Comparable <item>
 {
-	
-	//parent variables that will be used in all the child classes
 	
 	private String name;
 	private String author;
@@ -15,86 +13,85 @@ public abstract class item
 	private double price;
 	public static final int MAX_NUM_ITEMS = 50;
 	
-	
-	//creates a abstract method that will be used to calculate the total price of each item 
-	
-	public abstract calculateTotal()
+	public item (String name,  String author, String genre, String publisher, String publicationDate, double price)
 	{
-		//return this.numItems * this.price;
-		//specified as an abstract method in requirements
+		this.name=name;
+		this.author=author;
+		this.genre=genre;
+		this.publisher=publisher;
+		this.publicationDate=publicationDate;
+		this.price=price;
+		numItems++;
 	}
+	public abstract double calculateTotal();
+	public abstract double calculateSubTotal();
 	
-	//accessor to return the name of an item 
 	public String getName()
 	{
 		return this.name;
 	}
-	//accessor to return the genre 
 	public String getGenre()
 	{
 		return this.genre;
 	}
-	//accessor to return the publisher 
+	public String getAuthor()
+	{
+		return this.author;
+	}
 	public String getPublisher()
 	{
 		return this.publisher;
 	}
-	//accessor to return the publication date
 	public String getPublicationDate()
 	{
 		return this.publicationDate;
 	}
-	//accessor to return the price 
 	public double getPrice()
 	{
 		return this.price;
 	}
-	//accessor to return the status of whether an item is on hold 
 	public boolean getOnHold()
 	{
 		return this.onHold;
 	}
-	//accessor to return the number of total items 
 	public int getNumItems()
 	{
 		return this.numItems;
 	}
-	//mutator to set the item name 
 	public void setName(String name)
 	{
 		this.name=name;
 	}
-	//mutator to return the author 
 	public void setAuthor(String author)
 	{
 		this.author=author;
 	}
-	//mutator to set the genre of the item 
 	public void setGenre(String genre)
 	{
 		this.genre=genre;
 	}
-	//mutator to set the publisher 
 	public void setPublisher(String publisher)
 	{
 		this.publisher=publisher;
 	}
-	//mutator to set the publication date 
 	public void setPublicationDate(String Date)
 	{
 		this.publicationDate=Date;
 	}
-	//mutator to set whether an item is on hold or not
 	public void SetHold(boolean onHold)
 	{
 		this.onHold=onHold;
 	}
-	//increments the number of items by one 
 	public void setNumItems()
 	{
-		numItems++;
+		
 	}
-	//method to format all the variables into a well formatted report 
+	//method that implements the comparable to sort the names by alphabetical order 
+	public int compareTo(item x)
+	{
+		int last= this.name.compareTo(x.getName());
+		return last==0 ? this.name.compareTo(x.getName()) : last;
+	}
 	public String toString()
 	{
 		return this.name + "\n" + this.author + "\n"
