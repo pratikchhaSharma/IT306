@@ -26,11 +26,13 @@ public static void main(String[] args){
 	String path = "./src/IT306Project/inventory.txt";
 	
 	items = readFromFile(path, items);
-	System.out.print(items.size());
-	System.out.print(items.get(1).getName());
-	String menu ="1- Add to cart\n2-Remove from cart\n3-Search\n4-Checkout.";
+	//System.out.print(items.size());
+	//System.out.print(items.get(1).getName());
+	String menu ="1- Add to cart\n2-Remove from cart\n3-Search\n4-Checkout.\n5-Quit program";
 	int option = 0;
+	
 	do{
+		try{
 		option = Integer.parseInt(JOptionPane.showInputDialog(menu));
 		switch(option){
 		case 1:
@@ -51,12 +53,20 @@ public static void main(String[] args){
 			break;
 		
 		}
-	}while(true);
+		}
+		catch(NumberFormatException e)
+		{
+			JOptionPane.showMessageDialog(null, "Invalid input");
+		}
+	}while(option!=4 && option!=5);
+	
+	
+	
+	
+	
 }
 
-
-
-   public static LinkedList<item> readFromFile(String path, LinkedList<item> items){
+public static LinkedList<item> readFromFile(String path, LinkedList<item> items){
 	try{
 		
 		
@@ -67,6 +77,7 @@ public static void main(String[] args){
 		int counter=0; 
 		while(scan.hasNextLine()){
 			item s;
+			
 			line = scan.nextLine();
 			scan2 = new Scanner(line);
 			scan2.useDelimiter(","); 
@@ -83,22 +94,44 @@ public static void main(String[] args){
 			//have not fully created items
 			if (type.equals("Journal")){
 				s = new journal(name, author, genre, publisher, publicationDate, price);
+				if(s.getNumItems()>item.MAX_NUM_ITEMS)
+				{
+					JOptionPane.showMessageDialog(null, "Database has exceeded max items");
+					break;
+				}
 				items.add(s);
 			}
 			if (type.equals("Book")) {
 				s = new book(name, author, genre, publisher, publicationDate, price);
+				if(s.getNumItems()>item.MAX_NUM_ITEMS)
+				{
+					JOptionPane.showMessageDialog(null, "Database has exceeded max items");
+					break;
+				}
 				items.add(s);
 			}
 			if (type.equals("CD")) {
 				s = new cd(name, author, genre, publisher, publicationDate, price);
+				if(s.getNumItems()>item.MAX_NUM_ITEMS)
+				{
+					JOptionPane.showMessageDialog(null, "Database has exceeded max items");
+					break;
+				}
 				items.add(s);
 			}
+			
 		
 			//System.out.println(line);
 		}
 	}
 	catch(FileNotFoundException e){
+		JOptionPane.showMessageDialog(null, "Database doesn't exist");
 		e.printStackTrace(); 
+	}
+	catch (NoSuchElementException e)
+	{
+		JOptionPane.showMessageDialog(null, "element not found");
+		e.printStackTrace();
 	}
 	catch( IOException e){
 		e.printStackTrace(); 
@@ -106,13 +139,14 @@ public static void main(String[] args){
 	return items;
 }
 
+
 /*The addToCart method will allow a user to add an item to their cart. The cart will be sorted by name (A to Z) or price (Low to High) 
    with each item added. It will first ask the user what the name of the item they would like added, if the item exists in the database
    then it will add to the cart.
 */
 public static void addToCart(Object Item, LinkedList<item> Cart, LinkedList<item> items){
 	if (Cart.size() > item.MAX_NUM_ITEMS){
-		throw new ArrayIndexOutOfBoundsException("Cart is full");	
+		JOptionPane.showMessageDialog(null, "Cart is full");	
 	}
 	else{
 		//create a dialog box with a scroll allowing for user to select what item they wish to add to cart
@@ -147,8 +181,9 @@ public static void addToCart(Object Item, LinkedList<item> Cart, LinkedList<item
     If the number exists the cart will remove the item and renumber the cart.
 */
 public static void removeFromCart(Object Item, LinkedList <item> Cart){
-	if (Cart.size() == 0){
-		throw new ArrayIndexOutOfBoundsException("Cart is empty");	
+	if (Cart.size() == 0 || Cart.isEmpty()){
+		JOptionPane.showMessageDialog(null, "Cart is empty");
+		
 	}
 	else {
 		/*Create a dialog box that shows users cart that is numbered, user inputs number they want removed.
@@ -191,13 +226,25 @@ public static void search(LinkedList <item> Items){
 			JOptionPane.showMessageDialog(null, "Item exists");
 			return;
 		}
-		
+		else
+		{
+			JOptionPane.showMessageDialog(null, "Item does not exist");
+			return;
+		}
 
 	}
 	
-	JOptionPane.showMessageDialog(null, "Item does not exist");
+	
    }
 
+
+//this function implements comparable/comparator to sort the objects in the LinkedList by name 
+public static LinkedList<item> selectionSort(LinkedList<item> Cart){
+	
+		
+	Collections.sort(Cart);
+	return Cart;
+}
 
 
 //Checking out adjusts the database.
@@ -213,21 +260,23 @@ public static void checkout(LinkedList <item> Cart, String path){
 	String totals = "";
 	//fill with logic to append cart to string,  do math for totals, display the string, and rewrite database
 			///need to reproduce cart instead
-	if (Cart.size() == 0){
-		throw new IllegalArgumentException("Cart is empty.");
+	if (Cart.size() == 0 || Cart.isEmpty()){
+		JOptionPane.showMessageDialog(null, "Cart is empty.");
+		
+		
 	}
 	else{
-		
+		selectionSort(Cart);
 		
 		for (int i = 0; i < Cart.size(); i++){
 			subTotal+=Cart.get(i).calculateSubTotal();
 			total+=Cart.get(i).calculateTotal();
-			cartString += i+1 + ". " + Cart.get(i).getName() + "        " + Cart.get(i).getPrice() + "\n ";   	
+			cartString +=i+1+"." + Cart.get(i).getName() + ": " + Cart.get(i).getPrice() + "$\n ";   	
 		}
-		
+		totals += "\nSubtotal: " + subTotal + "$ \nTotal: " + total;
+		JOptionPane.showMessageDialog(null, cartString + "\n" + totals+"$");
 	}
-	totals += "\n Subtotal:         " + subTotal + "\nTotal:       " + total;
-	JOptionPane.showMessageDialog(null, cartString + "\n" + totals);
+	
 }
 
 }
